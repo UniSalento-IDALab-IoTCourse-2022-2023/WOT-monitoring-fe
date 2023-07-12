@@ -1,27 +1,29 @@
-# FeCompany
+# WOT-monitoring-fe
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.1.4.
+## Descrizione del progetto
+Il progetto è basato sulla manutenzione delle caldaie, considerando la pericolosità dei processi che utilizzano (come la combustione del gas) e l'impatto ambientale che possono avere.
 
-## Development server
+Si propone un sistema innovativo che sfrutta le tecnologie IoT (Internet of Things) per monitorare il funzionamento delle caldaie e rilevare eventuali anomalie in tempo reale. Un'importante componente di questo sistema è una board prototipale, in grado di acquisire dati simili a quelli che vengono monitorati all'interno di una caldaia.
+I dati acquisiti dalla board prototipale vengono quindi inviati a un dispositivo centrale, chiamato gateway, che ha la capacità di elaborare i dati in loco. Il gateway analizza i dati ricevuti e rileva eventuali anomalie nel funzionamento della caldaia, come ad esempio una temperatura o una pressione anomale, o un'alta emissione di gas.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+In caso di rilevamento di un problema, il sistema è in grado di generare alert, avvisando gli utenti o il personale tecnico responsabile della manutenzione della caldaia. Questo consente un intervento tempestivo per risolvere il problema prima che si manifestino effetti indesiderati o pericolosi.
+Inoltre, il sistema comunica con un sistema esterno per il monitoraggio dei consumi energetici e dell'inquinamento generato dalla caldaia. Questo permette di avere una visione completa sull'efficienza energetica e sull'impatto ambientale del dispositivo, consentendo eventuali interventi mirati per ottimizzare l'uso delle risorse e ridurre l'inquinamento.
 
-## Code scaffolding
+Infine, tutte le informazioni raccolte e i dati elaborati vengono visualizzati in una dashboard che fornisce una panoramica completa dello stato e delle prestazioni della caldaia. Questo permette agli utenti di monitorare facilmente il funzionamento del dispositivo e di avere una chiara comprensione dei consumi energetici e delle emissioni.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## Architettura del sistema
+L'architettura della soluzione proposta prevede un Raspberry Pi che metterà a disposizione la sua computazione ed il suo modulo bluetooth per poter, tramite il protocollo OpenTherm, acquisire i dati di temperatura, pressione, flusso, emissioni di gas, ecc. Questa acquisizione di dati verrà effettuata ogni minuto in modo da non avere problemi di ritardo nella segnalazione di anomalie.
+Successivamente i dati arrivati alla board prototipale verranno inviati ad un gateway locale, che sarà in grado di ricevere i dati per poter effettuare un’analisi di anomalie. Questo processo viene eseguito in locale per favorire la rapidità di intervento in caso di guasti pericolosi all’utenza, infatti permetteranno di effettuare un'analisi preliminare sulle anomalie rilevate nei dati della caldaia.
+Una volta che sono state effettuate le analisi locali il gateway, tramite il protocollo MQTT, si occupa di inviare al back-end del cloud, su due queue diverse, sia i dati grezzi che i dati di allarme e quindi delle anomalie riscontrate.
+Infine l’utente potrà visionare e monitorare l’andamento della caldaia grazie ad una pratica dashboard presente sulla webapp.
 
-## Build
+![](./img%20readme/architettura%202.png)
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+## Collegamento agli altri componenti
+I collegamenti con tutti i componenti del progetto sono:
+- [WOT-RaspberryBoile](https://github.com/UniSalento-IDALab-IoTCourse-2022-2023/WOT-RaspberryBoile)
+- [WOT-Gateway](https://github.com/UniSalento-IDALab-IoTCourse-2022-2023/WOT-Gateway)
+- [WOT-monitoring-be](https://github.com/UniSalento-IDALab-IoTCourse-2022-2023/WOT-monitoring-be)
+- [WOT-monitoring-fe](https://github.com/UniSalento-IDALab-IoTCourse-2022-2023/WOT-monitoring-fe)
 
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+## Descrizione del componente corrente
