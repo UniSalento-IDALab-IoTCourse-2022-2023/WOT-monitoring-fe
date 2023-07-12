@@ -1,0 +1,105 @@
+
+<div class="grid-container">
+    <mat-grid-list cols="2" rows="1">
+        <mat-grid-tile colspan="1" rowspan="1">
+            <mat-card class="dashboard-card">
+                <mat-card-title>Stat Details</mat-card-title>
+                <mat-card-content>
+                <p>
+                    <mat-icon>thermostat</mat-icon>
+                    Temperature: {{ stat.temperature }} °C
+                </p>
+                <p>
+                    <mat-icon>compress</mat-icon>
+                    Pressure: {{ stat.pressure }} bar
+                </p>
+                <p>
+                    <mat-icon>blur_on</mat-icon>
+                    Carbon Monoxide Level: {{ stat.carbonMonoxideLevel }} ppm
+                    <mat-icon *ngIf="stat.carbonMonoxideLevel > 10000" class="alert-icon">warning</mat-icon>
+                </p>
+                <p>
+                    <mat-icon>moving</mat-icon>
+                    performance: {{ stat.performance }}
+                    <mat-icon *ngIf="stat.performance < 90" class="alert-icon">warning</mat-icon>
+                </p>
+                <p>
+                    <mat-icon *ngIf="stat.state === 'OK'" class="satisfied-icon">sentiment_satisfied_alt</mat-icon>
+                    <mat-icon *ngIf="stat.state !== 'OK'" class="dissatisfied-icon">sick</mat-icon>
+                    State: {{ stat.state }}
+                    <mat-icon *ngIf="stat.state !== 'OK'" class="alert-icon">warning</mat-icon>
+                </p>
+                </mat-card-content>
+            </mat-card>
+        </mat-grid-tile>
+
+        <mat-grid-tile colspan="1" rowspan="1">
+            <mat-card class="dashboard-card"> 
+                <mat-card-title>Boiler Details</mat-card-title>
+                <mat-card-content>
+                <p>
+                    <mat-icon>numbers</mat-icon>
+                    id: {{ boiler.id }}
+                </p>
+                <p>
+                    <mat-icon>email</mat-icon>
+                    Email: {{ boiler.email }}
+                </p>
+                </mat-card-content>
+            </mat-card>
+        </mat-grid-tile>
+    </mat-grid-list>
+</div>
+
+<mat-form-field appearance="fill">
+    <mat-label>Filter</mat-label>
+    <input matInput type="text" #input (keyup)="doFilter(input.value)" placeholder="Filter">
+</mat-form-field>
+
+<div class="mat-elevation-z8">
+    <table mat-table [dataSource]="dataSource" matSort (matSortChange)="announceSortChange($event)">
+
+    <!-- Boiler Id Column -->
+    <ng-container matColumnDef="boilerId">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by boilerId">
+        Boiler Id
+    </th>
+    <td mat-cell *matCellDef="let element">
+    <a mat-button [routerLink]="['/boilers', element.boilerId]">{{element.boilerId}}</a>
+    </td>
+    </ng-container>
+
+    <!-- Alert Id Column -->
+    <ng-container matColumnDef="alertId">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by alertId">
+            Alert Id
+        </th>
+        <td mat-cell *matCellDef="let element"> {{element.alertId}} </td>
+    </ng-container>
+
+    <!-- date Column -->
+    <ng-container matColumnDef="date">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by date">
+    date
+    </th>
+    <td mat-cell *matCellDef="let element"> {{element.date}} </td>
+    </ng-container>
+
+    <!-- solved Column -->
+    <ng-container matColumnDef="solved">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by solved">
+    solved
+    </th>
+    <td mat-cell *matCellDef="let element"> {{element.solved}} </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
+    <mat-paginator [pageSizeOptions]="[5, 10, 20]"
+    showFirstLastButtons
+    aria-label="Select page of periodic elements">
+    </mat-paginator>
+</div>
+
