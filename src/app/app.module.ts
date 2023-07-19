@@ -4,7 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { BoilersListComponent } from './components/boilers-list/boilers-list.component';
+import { BoilersListComponent } from './components/client-list/client-list.component';
 import { BoilerService } from './services/boiler.service';
 import { FormsModule } from '@angular/forms';
 import { MatTableModule } from '@angular/material/table';
@@ -20,6 +20,7 @@ import {MatCardModule} from '@angular/material/card'
 import { MatButtonModule } from '@angular/material/button';
 import {MatGridListModule} from '@angular/material/grid-list';
 import { TopNavbarComponent } from './components/top-navbar/top-navbar.component';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -46,8 +47,11 @@ import { TopNavbarComponent } from './components/top-navbar/top-navbar.component
     MatButtonModule,
     MatCardModule,
     MatGridListModule,
+    HttpClientModule,
   ],
-  providers: [BoilerService],
+  providers: [
+    BoilerService,
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

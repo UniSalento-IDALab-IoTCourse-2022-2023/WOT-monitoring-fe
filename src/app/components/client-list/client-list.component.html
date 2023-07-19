@@ -6,20 +6,30 @@
 <table mat-table [dataSource]="dataSource" matSort (matSortChange)="announceSortChange($event)"
        class="mat-elevation-z8">
 
-  <!-- id Column -->
-  <ng-container matColumnDef="id">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by id">
-      id
+  <!-- client id Column -->
+  <ng-container matColumnDef="clientId">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by clientId">
+      Client id
     </th>
     <td mat-cell *matCellDef="let element">
-      <a mat-button [routerLink]="['/boilers', element.id]">{{element.id}}</a>
+      <a mat-button [routerLink]="['/boilers', element.boilerId]">{{element.id}}</a>
+    </td>
+  </ng-container>
+
+  <!-- boiler id Column -->
+  <ng-container matColumnDef="boilerId">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by boilerId">
+      Boiler id
+    </th>
+    <td mat-cell *matCellDef="let element">
+      <a mat-button [routerLink]="['/boilers', element.boilerId]">{{element.boilerId}}</a>
     </td>
   </ng-container>
 
   <!-- email Column -->
   <ng-container matColumnDef="email">
     <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by email">
-      email
+      Email
     </th>
     <td mat-cell *matCellDef="let element"> {{element.email}} </td>
   </ng-container>

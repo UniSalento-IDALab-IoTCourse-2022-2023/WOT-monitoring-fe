@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { BoilersListComponent } from './boilers-list.component';
+import { BoilersListComponent } from './client-list.component';
 
 describe('BoilersListComponent', () => {
   let component: BoilersListComponent;

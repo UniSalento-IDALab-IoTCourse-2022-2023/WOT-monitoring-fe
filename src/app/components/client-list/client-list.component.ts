@@ -3,28 +3,40 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Boiler } from 'src/app/models/boiler';
+import { Client } from 'src/app/models/client';
 import { BoilerService } from 'src/app/services/boiler.service';
+import { ClientsService } from 'src/app/services/clients.service';
 
 @Component({
-  selector: 'app-boilers-list',
-  templateUrl: './boilers-list.component.html',
-  styleUrls: ['./boilers-list.component.scss']
+  selector: 'app-clients-list',
+  templateUrl: './client-list.component.html',
+  styleUrls: ['./client-list.component.scss']
 })
 export class BoilersListComponent implements OnInit{
 
   @ViewChild(MatSort)
   sort!: MatSort;
 
-  boilerList : Boiler[] = []
+  clientList : Client [] = []
 
-  displayedColumns: string[] = ['id', 'email'];
-  dataSource = new MatTableDataSource(this.boilerList);
+  displayedColumns: string[] = ['clientId', 'boilerId','email'];
+  dataSource = new MatTableDataSource(this.clientList);
 
-  constructor(private boilerService : BoilerService , private _liveAnnouncer: LiveAnnouncer){}
+  constructor(private clientService : ClientsService , private _liveAnnouncer: LiveAnnouncer){}
 
   ngOnInit(): void {
-    this.boilerList = this.boilerService.getBoilerList()
-    this.dataSource = new MatTableDataSource(this.boilerList);
+    
+    this.clientService.getAllClients().subscribe(
+      (clients: Client[]) => {
+        this.clientList = clients;
+        console.log(this.clientList);
+        this.dataSource = new MatTableDataSource(this.clientList);
+      },
+      (error: any) => {
+        // Handle errors here
+      }
+    );
+
   }
 
   ngAfterViewInit() {

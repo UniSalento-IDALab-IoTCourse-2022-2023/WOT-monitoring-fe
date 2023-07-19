@@ -1,105 +1,177 @@
-
-<div class="grid-container">
-    <mat-grid-list cols="2" rows="1">
-        <mat-grid-tile colspan="1" rowspan="1">
-            <mat-card class="dashboard-card">
-                <mat-card-title>Stat Details</mat-card-title>
-                <mat-card-content>
+<!-- <div class="grid-container"> -->
+<mat-grid-list cols="2" rows="3" rowHeight="350px">
+    <mat-grid-tile colspan="1" rowspan="1">
+        <mat-card class="dashboard-card">
+            <mat-card-title>Stat Details</mat-card-title>
+            <mat-card-content>
                 <p>
                     <mat-icon>thermostat</mat-icon>
-                    Temperature: {{ stat.temperature }} °C
+                    Boiler Water Temperature: {{ stat.temperatureAverageData.toFixed(2) }} °C
                 </p>
                 <p>
                     <mat-icon>compress</mat-icon>
-                    Pressure: {{ stat.pressure }} bar
+                    CH Water Pressure: {{ stat.pressureAverageData.toFixed(2) }} bar
                 </p>
                 <p>
                     <mat-icon>blur_on</mat-icon>
-                    Carbon Monoxide Level: {{ stat.carbonMonoxideLevel }} ppm
-                    <mat-icon *ngIf="stat.carbonMonoxideLevel > 10000" class="alert-icon">warning</mat-icon>
+                    Carbon Monoxide Level: {{ stat.carbonMonoxideAverageData.toFixed(2) }} ppm
+                    <mat-icon *ngIf="stat.carbonMonoxideAverageData > 1000" class="alert-icon">warning</mat-icon>
                 </p>
                 <p>
                     <mat-icon>moving</mat-icon>
-                    performance: {{ stat.performance }}
-                    <mat-icon *ngIf="stat.performance < 90" class="alert-icon">warning</mat-icon>
+                    performance: {{ stat.performanceAverageData.toFixed(2) }}
+                    <mat-icon *ngIf="stat.performanceAverageData < 90" class="alert-icon">warning</mat-icon>
                 </p>
-                <p>
+                <!-- <p>
                     <mat-icon *ngIf="stat.state === 'OK'" class="satisfied-icon">sentiment_satisfied_alt</mat-icon>
                     <mat-icon *ngIf="stat.state !== 'OK'" class="dissatisfied-icon">sick</mat-icon>
                     State: {{ stat.state }}
                     <mat-icon *ngIf="stat.state !== 'OK'" class="alert-icon">warning</mat-icon>
-                </p>
-                </mat-card-content>
-            </mat-card>
-        </mat-grid-tile>
+                </p> -->
+            </mat-card-content>
+        </mat-card>
+    </mat-grid-tile>
 
-        <mat-grid-tile colspan="1" rowspan="1">
-            <mat-card class="dashboard-card"> 
-                <mat-card-title>Boiler Details</mat-card-title>
-                <mat-card-content>
+    <mat-grid-tile colspan="1" rowspan="1">
+        <mat-card class="dashboard-card">
+            <mat-card-title>Client Details</mat-card-title>
+            <mat-card-content>
                 <p>
                     <mat-icon>numbers</mat-icon>
-                    id: {{ boiler.id }}
+                    Client id: {{ client.id }}
+                </p>
+                <p>
+                    <mat-icon>numbers</mat-icon>
+                    Boiler id: {{ client.boilerId }}
+                </p>
+                <p>
+                    <mat-icon>account_circle</mat-icon>
+                    Name: {{ client.name }} {{client.surname}}
+                </p>
+                <p>
+                    <mat-icon>place</mat-icon>
+                    Address: {{ client.address }}
                 </p>
                 <p>
                     <mat-icon>email</mat-icon>
-                    Email: {{ boiler.email }}
+                    Email: {{ client.email }}
                 </p>
-                </mat-card-content>
-            </mat-card>
-        </mat-grid-tile>
-    </mat-grid-list>
+            </mat-card-content>
+        </mat-card>
+    </mat-grid-tile>
+</mat-grid-list>
+<!-- </div> -->
+
+<!-- alerts table -->
+<div>
+
+    <mat-form-field appearance="fill">
+        <mat-label>Filter</mat-label>
+        <input matInput type="text" #input (keyup)="doFilter(input.value)" placeholder="Filter">
+    </mat-form-field>
+
+    <div class="mat-elevation-z8">
+        <table mat-table [dataSource]="dataSourceAlerts" matSort (matSortChange)="announceSortChange($event)">
+
+            <!-- Alert Id Column -->
+            <ng-container matColumnDef="alertId">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by alertId">
+                    Alert Id
+                </th>
+                <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+            </ng-container>
+
+            <!-- Alert type Column -->
+            <ng-container matColumnDef="alarmType">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by alarmType">
+                    Alert Type
+                </th>
+                <td mat-cell *matCellDef="let element"> {{element.alarmType}} </td>
+            </ng-container>
+
+            <!-- date Column -->
+            <ng-container matColumnDef="date">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by date">
+                    date
+                </th>
+                <td mat-cell *matCellDef="let element"> {{element.date}} </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumnsAlerts"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumnsAlerts;"></tr>
+        </table>
+
+        <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons
+            aria-label="Select page of periodic elements">
+        </mat-paginator>
+    </div>
 </div>
 
-<mat-form-field appearance="fill">
-    <mat-label>Filter</mat-label>
-    <input matInput type="text" #input (keyup)="doFilter(input.value)" placeholder="Filter">
-</mat-form-field>
+<!-- stats table -->
+<div class="table-container">
 
-<div class="mat-elevation-z8">
-    <table mat-table [dataSource]="dataSource" matSort (matSortChange)="announceSortChange($event)">
+    <mat-form-field appearance="fill">
+        <mat-label>Filter</mat-label>
+        <input matInput type="text" #input (keyup)="doFilter(input.value)" placeholder="Filter">
+    </mat-form-field>
 
-    <!-- Boiler Id Column -->
-    <ng-container matColumnDef="boilerId">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by boilerId">
-        Boiler Id
-    </th>
-    <td mat-cell *matCellDef="let element">
-    <a mat-button [routerLink]="['/boilers', element.boilerId]">{{element.boilerId}}</a>
-    </td>
-    </ng-container>
+    <div class="mat-elevation-z8">
+        <table mat-table [dataSource]="dataSourceStats" matSort (matSortChange)="announceSortChange($event)">
 
-    <!-- Alert Id Column -->
-    <ng-container matColumnDef="alertId">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by alertId">
-            Alert Id
-        </th>
-        <td mat-cell *matCellDef="let element"> {{element.alertId}} </td>
-    </ng-container>
+            <!-- Stat id Column -->
+            <ng-container matColumnDef="id">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by alertId">
+                    Stat id
+                </th>
+                <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+            </ng-container>
 
-    <!-- date Column -->
-    <ng-container matColumnDef="date">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by date">
-    date
-    </th>
-    <td mat-cell *matCellDef="let element"> {{element.date}} </td>
-    </ng-container>
+            <!-- date Column -->
+            <ng-container matColumnDef="date">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by date">
+                    Date
+                </th>
+                <td mat-cell *matCellDef="let element"> {{element.date}} </td>
+            </ng-container>
 
-    <!-- solved Column -->
-    <ng-container matColumnDef="solved">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by solved">
-    solved
-    </th>
-    <td mat-cell *matCellDef="let element"> {{element.solved}} </td>
-    </ng-container>
+            <!-- temperature Column -->
+            <ng-container matColumnDef="temperatureAverageData">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by temperature">
+                    Boiler Water Temperature
+                </th>
+                <td mat-cell *matCellDef="let element"> {{element.temperatureAverageData.toFixed(2)}} °C </td>
+            </ng-container>
 
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-    </table>
+            <!-- pressure Column -->
+            <ng-container matColumnDef="pressureAverageData">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by pressure">
+                    CH Water Pressure
+                </th>
+                <td mat-cell *matCellDef="let element"> {{element.pressureAverageData.toFixed(2)}} bar</td>
+            </ng-container>
 
-    <mat-paginator [pageSizeOptions]="[5, 10, 20]"
-    showFirstLastButtons
-    aria-label="Select page of periodic elements">
-    </mat-paginator>
+            <!-- carbon Column -->
+            <ng-container matColumnDef="carbonMonoxideAverageData">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by carbon">
+                    Carbon Monoxide Level
+                </th>
+                <td mat-cell *matCellDef="let element"> {{element.carbonMonoxideAverageData.toFixed(2)}} ppm</td>
+            </ng-container>
+
+            <!-- performance Column -->
+            <ng-container matColumnDef="performanceAverageData">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by performance">
+                    Performance
+                </th>
+                <td mat-cell *matCellDef="let element"> {{element.performanceAverageData.toFixed(2)}} </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumnsStats"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumnsStats;"></tr>
+        </table>
+
+        <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons
+            aria-label="Select page of periodic elements">
+        </mat-paginator>
+    </div>
 </div>
-

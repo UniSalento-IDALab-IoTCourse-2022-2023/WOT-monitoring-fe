@@ -1,6 +1,7 @@
 export interface Alert {
     boilerId : string;
-    alertId: string;
+    alarmType : string;
+    id: string;
     date: string;
-    solved: boolean;
+    // solved: boolean;
 }

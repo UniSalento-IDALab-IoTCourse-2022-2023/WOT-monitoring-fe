@@ -1,9 +1,25 @@
+import { HttpClient, HttpClientJsonpModule } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Client } from '../models/client';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ClientsService {
 
-  constructor() { }
+  url : string = "http://localhost:8081/api/monitoringbe/user/"
+
+  constructor(private http : HttpClient) { }
+
+  getAllClients(): Observable<Client[]> {
+    const url = this.url + 'getAll';
+    return this.http.get<Client[]>(url);
+  }
+
+  getByBoilerId(id : string | null){
+    const url = this.url + 'getByBoilerId/' + id;
+    return this.http.get<Client>(url);
+  }
+
 }

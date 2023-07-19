@@ -1,7 +1,9 @@
 export interface Stat {
-    temperature: number;
-    pressure: number;
-    carbonMonoxideLevel: number;
-    performance: number;
-    state : string;
+    date: Date;
+    id: string;
+    boilerId: string;
+    temperatureAverageData: number;
+    pressureAverageData: number;
+    carbonMonoxideAverageData: number;
+    performanceAverageData: number;
 }

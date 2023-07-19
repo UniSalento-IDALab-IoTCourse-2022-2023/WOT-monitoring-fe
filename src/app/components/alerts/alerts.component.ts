@@ -17,12 +17,13 @@ export class AlertsComponent {
 
   alertsList : Alert[] = []
 
-  displayedColumns: string[] = ['boilerId','alertId', 'date', 'solved'];
-  dataSource = new MatTableDataSource(this.alertService.getAlertsList());
+  displayedColumns: string[] = ['boilerId','alertId', 'alarmType', 'date'];
+  dataSource = new MatTableDataSource(this.alertsList);
 
   constructor(private alertService : AlertsService , private _liveAnnouncer: LiveAnnouncer){}
 
   ngOnInit(): void {
+    this.getAlertsList();
   }
 
   ngAfterViewInit() {
@@ -46,6 +47,16 @@ export class AlertsComponent {
     if (value !== null) {
       this.dataSource.filter = value.trim().toLocaleLowerCase();
     }
+  }
+
+  getAlertsList(){
+    this.alertService.getAll().subscribe(
+      (alerts: Alert[]) => {
+        this.alertsList = alerts;
+        this.dataSource = new MatTableDataSource(this.alertsList);
+        console.log(this.alertsList);
+      },
+    );
   }
 
 }

@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { BoilersListComponent } from './components/boilers-list/boilers-list.component';
+import { BoilersListComponent } from './components/client-list/client-list.component';
 import { AlertsComponent } from './components/alerts/alerts.component';
 import { DetailsComponent } from './components/details/details.component';
 
