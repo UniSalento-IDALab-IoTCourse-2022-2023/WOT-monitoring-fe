@@ -27,3 +27,9 @@ I collegamenti con tutti i componenti del progetto sono:
 - [WOT-monitoring-fe](https://github.com/UniSalento-IDALab-IoTCourse-2022-2023/WOT-monitoring-fe)
 
 ## Descrizione del componente corrente
+Il componente corrente è l'applicativo di monitoring, il quale permetterà, tramite il [monitoring-be](https://github.com/UniSalento-IDALab-IoTCourse-2022-2023/WOT-monitoring-be), di far visualizzare i dati e gli allarmi acquisiti dal gateway. Insieme a questi dati si occuperà anche di visualizzare i dati del cliente che possiede quella caldaia.
+
+![](./img%20readme/fe.png)
+
+## Avvio del sistema
+...
