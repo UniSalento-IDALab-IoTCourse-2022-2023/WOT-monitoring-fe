@@ -21,6 +21,8 @@ import { MatButtonModule } from '@angular/material/button';
 import {MatGridListModule} from '@angular/material/grid-list';
 import { TopNavbarComponent } from './components/top-navbar/top-navbar.component';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { StatsComponent } from './components/stats/stats.component';
+import { AlarmTableComponent } from './components/alarm-table/alarm-table.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +31,8 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
     DetailsComponent,
     AlertsComponent,
     TopNavbarComponent,
+    StatsComponent,
+    AlarmTableComponent,
   ],
   imports: [
     BrowserModule,

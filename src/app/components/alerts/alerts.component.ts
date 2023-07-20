@@ -1,5 +1,6 @@
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { Component, ViewChild } from '@angular/core';
+import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Alert } from 'src/app/models/alerts';
@@ -14,6 +15,8 @@ export class AlertsComponent {
 
   @ViewChild(MatSort)
   sort!: MatSort;
+  @ViewChild(MatPaginator)
+  paginator!: MatPaginator;
 
   alertsList : Alert[] = []
 
@@ -27,7 +30,7 @@ export class AlertsComponent {
   }
 
   ngAfterViewInit() {
-    this.dataSource.sort = this.sort;
+   
   }
 
   /** Announce the change in sort state for assistive technology. */
@@ -55,6 +58,8 @@ export class AlertsComponent {
         this.alertsList = alerts;
         this.dataSource = new MatTableDataSource(this.alertsList);
         console.log(this.alertsList);
+        this.dataSource.sort = this.sort;
+        this.dataSource.paginator = this.paginator;
       },
     );
   }

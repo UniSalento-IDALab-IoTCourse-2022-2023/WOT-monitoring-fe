@@ -10,7 +10,7 @@ export class AggrDataService {
 
   constructor(private http : HttpClient) { }
 
-  url : string = "http://localhost:8081/api/monitoringbe/aggregatedData/"
+  url : string = "http://34.202.74.94:8081/api/monitoringbe/aggregatedData/"
 
   getAlertsList() : Observable <Stat[]>{
     const url = this.url + 'getAll';

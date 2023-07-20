@@ -1,5 +1,6 @@
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Boiler } from 'src/app/models/boiler';
@@ -16,6 +17,8 @@ export class BoilersListComponent implements OnInit{
 
   @ViewChild(MatSort)
   sort!: MatSort;
+  @ViewChild(MatPaginator)
+  paginator!: MatPaginator;
 
   clientList : Client [] = []
 
@@ -31,6 +34,8 @@ export class BoilersListComponent implements OnInit{
         this.clientList = clients;
         console.log(this.clientList);
         this.dataSource = new MatTableDataSource(this.clientList);
+        this.dataSource.sort = this.sort;
+        this.dataSource.paginator = this.paginator;
       },
       (error: any) => {
         // Handle errors here
@@ -40,7 +45,7 @@ export class BoilersListComponent implements OnInit{
   }
 
   ngAfterViewInit() {
-    this.dataSource.sort = this.sort;
+    // this.dataSource.sort = this.sort;
   }
 
   /** Announce the change in sort state for assistive technology. */

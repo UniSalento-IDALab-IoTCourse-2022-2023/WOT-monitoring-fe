@@ -10,7 +10,7 @@ export class AlertsService {
 
   constructor(private http : HttpClient) { }
 
-  url : string = "http://localhost:8081/api/monitoringbe/alarm/"
+  url : string = "http://34.202.74.94:8081/api/monitoringbe/alarm/"
 
   getAll() : Observable <Alert[]>{
     const url = this.url + 'getAll';

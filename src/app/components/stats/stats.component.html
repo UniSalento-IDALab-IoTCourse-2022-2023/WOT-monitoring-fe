@@ -1,0 +1,67 @@
+<!-- stats table -->
+<div class="table-container">
+
+    <mat-form-field appearance="fill">
+        <mat-label>Filter</mat-label>
+        <input matInput type="text" #input (keyup)="doFilter(input.value)" placeholder="Filter">
+    </mat-form-field>
+
+    <div class="mat-elevation-z8">
+        <table mat-table [dataSource]="dataSource" matSort (matSortChange)="announceSortChange($event)">
+
+            <!-- Stat id Column -->
+            <ng-container matColumnDef="id">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by alertId">
+                    Stat id
+                </th>
+                <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+            </ng-container>
+
+            <!-- date Column -->
+            <ng-container matColumnDef="date">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by date">
+                    Date
+                </th>
+                <td mat-cell *matCellDef="let element"> {{element.date}} </td>
+            </ng-container>
+
+            <!-- temperature Column -->
+            <ng-container matColumnDef="temperatureAverageData">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by temperature">
+                    Boiler Water Temperature
+                </th>
+                <td mat-cell *matCellDef="let element"> {{element.temperatureAverageData}} °C </td>
+            </ng-container>
+
+            <!-- pressure Column -->
+            <ng-container matColumnDef="pressureAverageData">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by pressure">
+                    CH Water Pressure
+                </th>
+                <td mat-cell *matCellDef="let element"> {{element.pressureAverageData}} bar</td>
+            </ng-container>
+
+            <!-- carbon Column -->
+            <ng-container matColumnDef="carbonMonoxideAverageData">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by carbon">
+                    Carbon Monoxide Level
+                </th>
+                <td mat-cell *matCellDef="let element"> {{element.carbonMonoxideAverageData}} ppm</td>
+            </ng-container>
+
+            <!-- performance Column -->
+            <ng-container matColumnDef="performanceAverageData">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by performance">
+                    Performance
+                </th>
+                <td mat-cell *matCellDef="let element"> {{element.performanceAverageData}} </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+
+        <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons
+            aria-label="Select page of periodic elements">
+        </mat-paginator>
+    </div>
